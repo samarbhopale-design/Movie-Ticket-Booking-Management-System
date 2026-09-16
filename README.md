@@ -1,4 +1,4 @@
-# 🎬 Samar — Movie Ticket Booking & Management System
+# 🎬 Movie Ticket Booking & Management System
 
 <p align="center">
 
@@ -11,8 +11,6 @@
 ---
 
 ## 🌟 Overview
-
-**Samar** is a web-based movie ticket booking and management platform designed to provide a simple and seamless way to browse movies, book tickets, manage reservations, and share movie reviews.
 
 The application combines a structured **MySQL database** for movies, customers, and bookings with **MongoDB** for flexible movie review data.
 
@@ -195,7 +193,7 @@ Example document:
 
 ```json
 {
-  "customer_name": "Sujal",
+  "customer_name": "Samar",
   "movie_name": "Inception",
   "rating": 5,
   "comment": "Amazing background score and plot!",
@@ -240,7 +238,7 @@ This structure keeps customer, movie, and booking information organized and redu
 # 📁 Project Structure
 
 ```text
-samar-movie-booking/
+movie-booking/
 │
 ├── app.py
 ├── config.py
@@ -275,7 +273,7 @@ git clone YOUR_GITHUB_REPOSITORY_URL
 Navigate to the project:
 
 ```bash
-cd samar-movie-booking
+cd movie-booking
 ```
 
 ---
@@ -361,7 +359,7 @@ Replace `YOUR_MYSQL_PASSWORD` with your MySQL password.
 
 ---
 
-# ▶️ Running Samar
+# ▶️ Running 
 
 Start the Flask application:
 
@@ -504,7 +502,7 @@ The application supports standard data operations.
 
 ```text
 Customer:
-Sujal
+Samar
 
 Movie:
 Inception
@@ -528,7 +526,7 @@ Confirmed
 
 ```text
 Customer:
-Sujal
+Samar
 
 Movie:
 Inception
@@ -544,7 +542,7 @@ MongoDB document:
 
 ```json
 {
-  "customer_name": "Sujal",
+  "customer_name": "Samar",
   "movie_name": "Inception",
   "rating": 5,
   "comment": "Amazing background score and plot!"
@@ -601,16 +599,6 @@ MongoDB provides flexible document storage for reviews and feedback.
 
 ---
 
-# 👨‍💻 About
-
-### Samar by Sujal
-
-**Samar** is a lightweight movie booking platform created with a focus on simplicity, usability, and practical database integration.
-
-**Built by Sujal**
-
----
-
 # 📜 License
 
 This project is provided for educational and personal development purposes.
@@ -618,11 +606,3 @@ This project is provided for educational and personal development purposes.
 ---
 
 <p align="center">
-
-## 🎬 Samar
-
-### **Book. Watch. Review.**
-
-**Built with Python · Flask · MySQL · MongoDB**
-
-</p>
