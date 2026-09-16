@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Movie Ticket Booking & Management System{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <!-- NAVIGATION BAR -->
+    <nav class="navbar">
+        <div class="container nav-container">
+            <a href="{{ url_for('index') }}" class="logo">
+                🎬 <span>CineTicket</span>
+            </a>
+            <ul class="nav-links">
+                <li><a href="{{ url_for('index') }}" class="{% if request.endpoint == 'index' %}active{% endif %}">Home</a></li>
+                <li><a href="{{ url_for('movies') }}" class="{% if request.endpoint == 'movies' %}active{% endif %}">Movies</a></li>
+                <li><a href="{{ url_for('book') }}" class="{% if request.endpoint == 'book' %}active{% endif %}">Book Ticket</a></li>
+                <li><a href="{{ url_for('bookings') }}" class="{% if request.endpoint == 'bookings' %}active{% endif %}">Bookings</a></li>
+                <li><a href="{{ url_for('reviews') }}" class="{% if request.endpoint == 'reviews' %}active{% endif %}">Reviews</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- MAIN CONTENT CONTAINER -->
+    <main class="container">
+        <!-- FLASH MESSAGES -->
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="alert-container">
+                    {% for category, message in messages %}
+                        <div class="alert alert-{{ category }}">
+                            <span>{{ message }}</span>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        {% block content %}{% endblock %}
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <p><strong>Movie Ticket Booking & Management System</strong></p>
+            <p style="margin-top: 5px; color: #6c757d; font-size: 0.85rem;">
+                MySQL Database: <code>movie_booking_db</code> | MongoDB Database: <code>movie_booking_nosql</code>
+            </p>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+{% extends "base.html" %}
+
+{% block title %}Movie Reviews - Movie Ticket Booking System{% endblock %}
+
+{% block content %}
+<div class="table-header-bar">
+    <div>
+        <h1 class="section-title" style="margin-bottom: 5px;">⭐ Movie Reviews</h1>
+        <p style="color: var(--text-muted);">Share your feedback and read ratings from other cinema viewers.</p>
+    </div>
+    <span class="db-badge-mongo">
+        ⭐ Source: Customer Feedback
+    </span>
+</div>
+
+{% if mongo_error %}
+<div class="alert alert-danger">
+    <strong>⚠️ Database Connection Error!</strong> Could not connect to Database server. Please make sure database service is running.
+</div>
+{% endif %}
+
+<div class="reviews-container" style="margin-top: 25px;">
+    
+    <!-- LEFT COLUMN: REVIEW SUBMISSION FORM -->
+    <div>
+        <div class="booking-card" style="margin: 0; padding: 25px;">
+            <h3 style="margin-bottom: 20px; font-size: 1.3rem;">Write a Movie Review</h3>
+            <form action="{{ url_for('add_review_route') }}" method="POST">
+                
+                <!-- Customer Name -->
+                <div class="form-group">
+                    <label for="customer_name">Your Name *</label>
+                    <input type="text" id="customer_name" name="customer_name" class="form-control" placeholder="e.g. Rahul" required>
+                </div>
+
+                <!-- Movie Name -->
+                <div class="form-group">
+                    <label for="movie_name">Select / Enter Movie *</label>
+                    <select id="movie_name" name="movie_name" class="form-control" required>
+                        <option value="" disabled selected>-- Select Movie --</option>
+                        {% for movie in movies %}
+                            <option value="{{ movie.movie_name }}">{{ movie.movie_name }}</option>
+                        {% endfor %}
+                        <option value="Other / General">Other / General Cinema</option>
+                    </select>
+                </div>
+
+                <!-- Rating (1 to 5 Stars) -->
+                <div class="form-group">
+                    <label>Rating (1 to 5 Stars) *</label>
+                    <input type="hidden" id="rating_value" name="rating" value="5">
+                    <div class="star-rating-input">
+                        <span data-value="1">★</span>
+                        <span data-value="2">★</span>
+                        <span data-value="3">★</span>
+                        <span data-value="4">★</span>
+                        <span data-value="5">★</span>
+                    </div>
+                    <div id="rating_feedback" class="review-feedback-text">5 Stars — 🤩 Excellent & Highly Recommended!</div>
+                </div>
+
+                <!-- Review Comment -->
+                <div class="form-group">
+                    <label for="comment">Review Comment *</label>
+                    <textarea id="comment" name="comment" class="form-control" rows="4" placeholder="Write your review here... (e.g. Excellent plot and amazing background music!)" required></textarea>
+                </div>
+
+                <button type="submit" class="btn btn-primary" style="width: 100%;">
+                    ⭐ Submit Review
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- RIGHT COLUMN: PREVIOUSLY SUBMITTED REVIEWS -->
+    <div>
+        <h3 style="margin-bottom: 20px; font-size: 1.3rem;">Customer Reviews</h3>
+        <div class="review-list">
+            {% for review in reviews %}
+            <div class="review-card">
+                <div class="review-card-header">
+                    <div class="review-author">👤 {{ review.customer_name }}</div>
+                    <div class="review-movie-badge">🎬 {{ review.movie_name }}</div>
+                </div>
+                <div class="review-stars">
+                    {% for i in range(review.rating|int) %}★{% endfor %}
+                    {% for i in range(5 - review.rating|int) %}<span style="color: #4a4e5d;">★</span>{% endfor %}
+                    <span style="font-size: 0.85rem; color: var(--text-muted); margin-left: 8px;">({{ review.rating }}/5)</span>
+                </div>
+                <p class="review-comment">"{{ review.comment }}"</p>
+                {% if review.created_at %}
+                    <div style="font-size: 0.75rem; color: #6c757d; margin-top: 10px; text-align: right;">
+                        🕒 {{ review.created_at }}
+                    </div>
+                {% endif %}
+            </div>
+            {% else %}
+            <div class="review-card" style="text-align: center; color: var(--text-muted); padding: 30px;">
+                🍃 No reviews submitted yet. Be the first to write a review!
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+</div>
+{% endblock %}

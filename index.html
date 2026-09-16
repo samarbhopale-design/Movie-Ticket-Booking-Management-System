@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Movie Ticket Booking System{% endblock %}
+
+{% block content %}
+<!-- HEADER TITLE SECTION -->
+<div style="text-align: center; margin-bottom: 30px;">
+    <h1 style="font-size: 2.4rem; font-weight: 800; color: #ffffff;">Movie Ticket Booking & Management System</h1>
+    <p style="color: #e50914; font-size: 1.15rem; font-weight: 600; margin-top: 6px;">
+        “Simple and Secure Movie Ticket Booking”
+    </p>
+</div>
+
+<!-- HERO SECTION -->
+<section class="hero">
+    <h1>Book Your Movie Tickets Easily</h1>
+    <p>Browse movies, select your show, pick interactive seats, book tickets, and manage your reservations with instant database confirmation.</p>
+    
+    <div style="display: flex; gap: 15px; justify-content: center; margin-top: 25px; flex-wrap: wrap;">
+        <a href="{{ url_for('book') }}" class="btn btn-primary" style="font-size: 1.1rem; padding: 14px 32px;">
+            🎟️ Book Ticket Now
+        </a>
+        <a href="{{ url_for('movies') }}" class="btn btn-secondary" style="font-size: 1.1rem; padding: 14px 28px;">
+            🎬 Browse Movies
+        </a>
+    </div>
+
+    <!-- STATS BAR -->
+    <div class="stats-bar">
+        <div class="stat-item">
+            <span style="color: var(--accent-red); font-size: 1.3rem;">🍿</span>
+            <span>6+ Blockbuster Movies</span>
+        </div>
+        <div class="stat-item">
+            <span style="color: #007bff; font-size: 1.3rem;">🛢️</span>
+            <span>Relational SQL Engine</span>
+        </div>
+        <div class="stat-item">
+            <span style="color: #4caf50; font-size: 1.3rem;">🍃</span>
+            <span>Dynamic Document Store</span>
+        </div>
+    </div>
+</section>
+
+<!-- FEATURES SECTION -->
+<h2 class="section-title">System Features</h2>
+<div class="features-grid">
+    <a href="{{ url_for('movies') }}" style="text-decoration: none; color: inherit;">
+        <div class="feature-card">
+            <div class="feature-icon">🎬</div>
+            <h3>Browse Movies</h3>
+            <p>Explore latest cinema releases with interactive filters, ratings, and timing schedules fetched live.</p>
+        </div>
+    </a>
+
+    <a href="{{ url_for('book') }}" style="text-decoration: none; color: inherit;">
+        <div class="feature-card">
+            <div class="feature-icon">🎟️</div>
+            <h3>Interactive Booking</h3>
+            <p>Pick visual seats on an interactive seat map, select dates & timings, and calculate total prices live.</p>
+        </div>
+    </a>
+
+    <a href="{{ url_for('bookings') }}" style="text-decoration: none; color: inherit;">
+        <div class="feature-card">
+            <div class="feature-icon">📋</div>
+            <h3>Manage Bookings</h3>
+            <p>View confirmed movie tickets, search by customer name/ID, copy booking IDs, and cancel tickets easily.</p>
+        </div>
+    </a>
+
+    <a href="{{ url_for('reviews') }}" style="text-decoration: none; color: inherit;">
+        <div class="feature-card">
+            <div class="feature-icon">⭐</div>
+            <h3>Submit Reviews</h3>
+            <p>Share your feedback with interactive star ratings and read ratings from other cinema viewers.</p>
+        </div>
+    </a>
+</div>
+{% endblock %}

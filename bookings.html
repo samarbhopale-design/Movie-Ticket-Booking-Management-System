@@ -1,0 +1,92 @@
+{% extends "base.html" %}
+
+{% block title %}Manage Bookings - Movie Ticket Booking System{% endblock %}
+
+{% block content %}
+<div class="table-header-bar">
+    <div>
+        <h1 class="section-title" style="margin-bottom: 5px;">📋 Manage Bookings</h1>
+        <p style="color: var(--text-muted);">Real-time booking records stored in MySQL table (<code>movie_booking_db.bookings</code>)</p>
+    </div>
+
+    <!-- SEARCH BOX -->
+    <form action="{{ url_for('bookings') }}" method="GET" class="search-form">
+        <input type="text" name="search" class="form-control search-input" placeholder="Search by Customer Name or Booking ID..." value="{{ search_query }}">
+        <button type="submit" class="btn btn-secondary">🔍 Search</button>
+        {% if search_query %}
+            <a href="{{ url_for('bookings') }}" class="btn btn-secondary" title="Clear Search">✖ Clear</a>
+        {% endif %}
+    </form>
+</div>
+
+{% if db_error %}
+<div class="alert alert-danger">
+    <strong>⚠️ MySQL Connection Error!</strong> Unable to connect to MySQL database server.
+</div>
+{% endif %}
+
+<div class="table-responsive">
+    <table class="bookings-table">
+        <thead>
+            <tr>
+                <th>Booking ID</th>
+                <th>Customer</th>
+                <th>Movie</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Tickets</th>
+                <th>Amount</th>
+                <th>Status</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for booking in bookings %}
+            <tr>
+                <td>
+                    <strong>#{{ booking.booking_id }}</strong>
+                    <button class="btn-copy-id" data-booking-id="{{ booking.booking_id }}" title="Copy Booking ID">📋</button>
+                </td>
+                <td>
+                    <div style="font-weight: 600;">{{ booking.customer_name }}</div>
+                    <div style="font-size: 0.8rem; color: var(--text-muted);">{{ booking.email }} | {{ booking.phone }}</div>
+                </td>
+                <td>{{ booking.movie_name }}</td>
+                <td>{{ booking.booking_date }}</td>
+                <td>{{ booking.show_time }}</td>
+                <td>{{ booking.tickets }} ({{ booking.seat_type }})</td>
+                <td><strong style="color: var(--accent-gold);">₹{{ booking.total_amount }}</strong></td>
+                <td>
+                    {% if booking.status == 'Confirmed' %}
+                        <span class="badge badge-confirmed">Confirmed</span>
+                    {% else %}
+                        <span class="badge badge-cancelled">Cancelled</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if booking.status == 'Confirmed' %}
+                        <form action="{{ url_for('cancel', booking_id=booking.booking_id) }}" method="POST" style="display: inline;">
+                            <button type="submit" class="btn btn-danger btn-cancel-booking" data-booking-id="{{ booking.booking_id }}" style="padding: 6px 12px; font-size: 0.85rem;">
+                                ✖ Cancel Booking
+                            </button>
+                        </form>
+                    {% else %}
+                        <span style="color: var(--text-muted); font-size: 0.85rem;">No Action</span>
+                    {% endif %}
+                </td>
+            </tr>
+            {% else %}
+            <tr>
+                <td colspan="9" style="text-align: center; color: var(--text-muted); padding: 40px;">
+                    {% if search_query %}
+                        No bookings found matching "<strong>{{ search_query }}</strong>".
+                    {% else %}
+                        No bookings registered yet. <a href="{{ url_for('book') }}" style="color: var(--accent-red);">Click here to book a ticket!</a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
