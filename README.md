@@ -1,161 +1,628 @@
-# 🎬 Movie Ticket Booking & Management System
-> **A Hybrid SQL + NoSQL College DBMS Project Submission**
+# 🎬 Samar — Movie Ticket Booking & Management System
+
+<p align="center">
+
+### A modern and simple movie ticket booking platform
+
+**Built with Python Flask · MySQL · MongoDB · HTML · CSS · JavaScript**
+
+</p>
 
 ---
 
-## 📌 Project Overview
-**Movie Ticket Booking & Management System** is a clean, simple, and modern college-level DBMS project designed to demonstrate dual-database integration in a web application:
-- **Relational SQL Database (MySQL)** is used for structured, transactional data (**Movies**, **Customers**, and **Bookings**).
-- **Document NoSQL Database (MongoDB)** is used for unstructured, high-frequency user feedback (**Movie Reviews**).
+## 🌟 Overview
 
-The application is built using standard Python **Flask**, plain **HTML5/CSS3/JavaScript**, **`mysql-connector-python`**, and **`pymongo`**.
+**Samar** is a web-based movie ticket booking and management platform designed to provide a simple and seamless way to browse movies, book tickets, manage reservations, and share movie reviews.
 
----
+The application combines a structured **MySQL database** for movies, customers, and bookings with **MongoDB** for flexible movie review data.
 
-## 🛠️ Technology Requirements
-
-- **Frontend:** HTML5, CSS3 (Modern Cinema Dark Theme), Simple Vanilla JavaScript
-- **Backend:** Python 3, Flask Framework
-- **SQL Database:** MySQL Server (`movie_booking_db`)
-- **NoSQL Database:** MongoDB Server (`movie_booking_nosql`)
-- **Python Libraries:** `Flask`, `mysql-connector-python`, `pymongo`
+The result is a lightweight, responsive, and database-driven movie booking experience.
 
 ---
 
-## 📂 Project Structure
+## ✨ Features
+
+### 🎬 Movie Discovery
+
+* Browse available movies
+* View movie information
+* Genre and language details
+* Movie duration
+* Ratings
+* Quick booking access
+
+### 🎟️ Ticket Booking
+
+Users can:
+
+* Select a movie
+* Choose a date
+* Select a show time
+* Choose seat type
+* Select ticket quantity
+* View automatically calculated total amount
+* Confirm a booking
+
+### 👤 Customer Management
+
+* Store customer information
+* Manage customer booking records
+* Connect customers with their reservations
+
+### 📋 Booking Management
+
+* View all bookings
+* Search bookings
+* View booking details
+* Track booking status
+* Cancel bookings
+
+### ⭐ Reviews & Ratings
+
+Users can:
+
+* Select a movie
+* Give a 1–5 star rating
+* Write a review
+* Submit feedback
+* View previously submitted reviews
+
+Reviews are stored as flexible documents in MongoDB.
+
+---
+
+# 🛠️ Technology Stack
+
+| Layer               | Technology              |
+| ------------------- | ----------------------- |
+| Frontend            | HTML5, CSS3, JavaScript |
+| Backend             | Python Flask            |
+| Relational Database | MySQL                   |
+| NoSQL Database      | MongoDB                 |
+| MySQL Driver        | mysql-connector-python  |
+| MongoDB Driver      | PyMongo                 |
+| Architecture        | Client–Server           |
+
+---
+
+# 🏗️ Architecture
 
 ```text
-samar dbms/
-├── app.py                  # Flask backend & application routes
-├── config.py               # Database connection configurations
-├── requirements.txt        # Python package dependencies
-├── README.md               # Project documentation & Viva guide
-│
-├── templates/              # HTML Jinja templates
-│   ├── base.html           # Layout with Navigation Bar
-│   ├── index.html          # Page 1: Home
-│   ├── movies.html         # Page 2: Movies (MySQL)
-│   ├── book.html           # Page 3: Book Ticket (Form & Price Calculation)
-│   ├── bookings.html       # Page 4: Bookings (MySQL CRUD & Search)
-│   └── reviews.html        # Page 5: Reviews (MongoDB)
-│
-├── static/                 # Static CSS & JS assets
-│   ├── style.css           # Cinema dark theme CSS styling
-│   └── script.js            # Live price calculator & form validation
-│
-└── database/
-    └── movie_booking.sql   # Complete SQL schema & initial sample data
+                         👤 USER
+                           │
+                           ▼
+                ┌────────────────────┐
+                │   WEB INTERFACE    │
+                │ HTML · CSS · JS    │
+                └──────────┬─────────┘
+                           │
+                           ▼
+                ┌────────────────────┐
+                │    FLASK SERVER    │
+                │   PYTHON BACKEND   │
+                └──────────┬─────────┘
+                           │
+                 ┌─────────┴─────────┐
+                 │                   │
+                 ▼                   ▼
+        ┌────────────────┐   ┌────────────────┐
+        │     MySQL      │   │    MongoDB     │
+        │   Relational   │   │     NoSQL      │
+        └───────┬────────┘   └───────┬────────┘
+                │                    │
+                ▼                    ▼
+        Movies · Customers       Movie Reviews
+             · Bookings
 ```
 
 ---
 
-## ⚙️ Installation & Setup Instructions
+# 🗃️ Data Management
 
-### Step 1: Install Python Dependencies
-Open your terminal or command prompt in the project root directory and run:
+## MySQL
+
+MySQL manages structured application data.
+
+### Database
+
+```text
+movie_booking_db
+```
+
+### Tables
+
+```text
+movie_booking_db
+│
+├── movies
+├── customers
+└── bookings
+```
+
+### Movies
+
+| Field        | Description             |
+| ------------ | ----------------------- |
+| `movie_id`   | Unique movie identifier |
+| `movie_name` | Movie title             |
+| `genre`      | Movie category          |
+| `language`   | Movie language          |
+| `duration`   | Movie duration          |
+| `rating`     | Movie rating            |
+
+### Customers
+
+| Field           | Description                |
+| --------------- | -------------------------- |
+| `customer_id`   | Unique customer identifier |
+| `customer_name` | Customer name              |
+| `email`         | Email address              |
+| `phone`         | Contact number             |
+
+### Bookings
+
+| Field          | Description               |
+| -------------- | ------------------------- |
+| `booking_id`   | Unique booking identifier |
+| `customer_id`  | Customer reference        |
+| `movie_id`     | Movie reference           |
+| `booking_date` | Date of booking           |
+| `show_time`    | Selected show             |
+| `tickets`      | Number of tickets         |
+| `seat_type`    | Regular / Premium         |
+| `total_amount` | Booking amount            |
+| `status`       | Confirmed / Cancelled     |
+
+---
+
+# 🍃 MongoDB
+
+MongoDB is used for flexible movie review and feedback data.
+
+### Database
+
+```text
+movie_booking_nosql
+```
+
+### Collection
+
+```text
+reviews
+```
+
+Example document:
+
+```json
+{
+  "customer_name": "Sujal",
+  "movie_name": "Inception",
+  "rating": 5,
+  "comment": "Amazing background score and plot!",
+  "created_at": "2026-09-16 18:20"
+}
+```
+
+---
+
+# 🔗 Data Relationships
+
+The booking system maintains relationships between customers, movies, and bookings.
+
+```text
+       CUSTOMERS
+           │
+           │ customer_id
+           ▼
+       BOOKINGS
+           ▲
+           │ movie_id
+           │
+         MOVIES
+```
+
+### Relationships
+
+```text
+customers.customer_id
+          ↓
+bookings.customer_id
+
+movies.movie_id
+          ↓
+bookings.movie_id
+```
+
+This structure keeps customer, movie, and booking information organized and reduces unnecessary duplication.
+
+---
+
+# 📁 Project Structure
+
+```text
+samar-movie-booking/
+│
+├── app.py
+├── config.py
+├── requirements.txt
+├── README.md
+│
+├── templates/
+│   ├── index.html
+│   ├── movies.html
+│   ├── book.html
+│   ├── bookings.html
+│   └── reviews.html
+│
+├── static/
+│   ├── style.css
+│   └── script.js
+│
+└── database/
+    └── movie_booking.sql
+```
+
+---
+
+# ⚙️ Installation
+
+## 1. Clone the Repository
+
+```bash
+git clone YOUR_GITHUB_REPOSITORY_URL
+```
+
+Navigate to the project:
+
+```bash
+cd samar-movie-booking
+```
+
+---
+
+## 2. Install Dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
-### Step 2: Set Up MySQL Database
-1. Open **MySQL Workbench** or **MySQL Command Line**.
-2. Run the SQL script located in `database/movie_booking.sql`:
-   ```sql
-   SOURCE c:/Users/HP/OneDrive/Desktop/samar dbms/database/movie_booking.sql;
-   ```
-   *(Or copy-paste the contents of `movie_booking.sql` into MySQL Workbench and execute).*
-3. Verify that the `movie_booking_db` database, along with tables `movies`, `customers`, and `bookings` have been created.
+Required packages:
 
-### Step 3: Start MongoDB Service
-Ensure **MongoDB Community Server** is running on `localhost:27017` (default port).
-- If using MongoDB service on Windows, ensure it is started in Services (`services.msc`).
-- Or run `mongod` from Command Prompt.
-
-### Step 4: Configure Database Credentials (Optional)
-If your MySQL password is not empty or if your port differs, update `config.py`:
-```python
-MYSQL_HOST = 'localhost'
-MYSQL_USER = 'root'
-MYSQL_PASSWORD = 'your_mysql_password'
-MYSQL_DB = 'movie_booking_db'
-MYSQL_PORT = 3306
-
-MONGO_URI = 'mongodb://localhost:27017/'
-MONGO_DB = 'movie_booking_nosql'
+```text
+Flask
+mysql-connector-python
+pymongo
 ```
 
-### Step 5: Launch the Application
-Run the Flask server:
+---
+
+## 3. Configure MySQL
+
+Create the database:
+
+```sql
+CREATE DATABASE movie_booking_db;
+```
+
+Import the SQL file:
+
+```text
+database/movie_booking.sql
+```
+
+Verify the database:
+
+```sql
+USE movie_booking_db;
+
+SELECT * FROM movies;
+SELECT * FROM customers;
+SELECT * FROM bookings;
+```
+
+---
+
+## 4. Configure MongoDB
+
+Start your local MongoDB server.
+
+Connection:
+
+```text
+mongodb://localhost:27017/
+```
+
+Create:
+
+```text
+Database:
+movie_booking_nosql
+
+Collection:
+reviews
+```
+
+---
+
+## 5. Configure Application
+
+Update your database credentials in the configuration file:
+
+```python
+MYSQL_HOST = "localhost"
+MYSQL_USER = "root"
+MYSQL_PASSWORD = "YOUR_MYSQL_PASSWORD"
+MYSQL_DATABASE = "movie_booking_db"
+
+MONGO_URI = "mongodb://localhost:27017/"
+```
+
+Replace `YOUR_MYSQL_PASSWORD` with your MySQL password.
+
+---
+
+# ▶️ Running Samar
+
+Start the Flask application:
+
 ```bash
 python app.py
 ```
-Open your browser and navigate to:
-👉 **`http://127.0.0.1:5000`**
+
+The application will be available at:
+
+```text
+http://127.0.0.1:5000
+```
+
+Open the address in your browser.
 
 ---
 
-## 🎯 5-Minute DBMS Viva Demonstration Flow
+# 🎥 Application Workflow
 
-Follow these exact steps during your 5-minute project demonstration:
+### 01 — Discover
 
-1. **Open Home Page:** Go to `http://127.0.0.1:5000`. Show the modern cinema interface and navigation.
-2. **Go to Movies:** Click on **Movies** in the navigation bar. Point out the 6 movie cards loaded from MySQL.
-3. **Select a Movie:** Click the **Book Now** button on any movie (e.g., *Inception*).
-4. **Book Tickets:** Fill in Customer Name (e.g., `Rahul`), Email (`rahul@gmail.com`), Phone (`9876543210`), select date, show time (e.g., `4:00 PM`), 2 tickets, and Premium seat type. Point out that the total amount (**₹500**) is calculated automatically on screen.
-5. **Confirm Booking:** Click **Confirm Booking**. Point out the success banner and generated **Booking ID** (e.g., `#3`).
-6. **Open Bookings:** Click on **Bookings** in the navigation bar. Show the newly added booking in the table.
-7. **Search & Cancel Demo:** Type `Rahul` in the search box to filter. Click **Cancel Booking** to demonstrate updating the status to `Cancelled` in MySQL.
-8. **Open MySQL Workbench:** Show the database tables:
-   ```sql
-   USE movie_booking_db;
-   SELECT * FROM movies;
-   SELECT * FROM customers;
-   SELECT * FROM bookings;
-   ```
-9. **Prove SQL Storage:** Demonstrate that the customer record and booking row are stored permanently in MySQL with Foreign Key relationships.
-10. **Go to Reviews:** Click on **Reviews** in the navigation bar.
-11. **Submit Review:** Enter Customer Name (`Sujal`), select movie (`Inception`), select 5 stars, type comment (`"Amazing background score and plot!"`), and click **Submit Review**.
-12. **Show Live MongoDB Display:** Show that the review instantly appears on the page without reloads.
-13. **Open MongoDB Compass / Mongo Shell:** Connect to `mongodb://localhost:27017/`.
-14. **Prove NoSQL Storage:** Open database `movie_booking_nosql` -> collection `reviews`. Show the document:
-    ```json
-    {
-      "customer_name": "Sujal",
-      "movie_name": "Inception",
-      "rating": 5,
-      "comment": "Amazing background score and plot!",
-      "created_at": "2026-09-16 18:20"
-    }
-    ```
+Browse available movies and explore their details.
 
----
+↓
 
-## 🎓 DBMS Viva Q&A Guide
+### 02 — Select
 
-### Q1: Why did you use both SQL (MySQL) and NoSQL (MongoDB) in this project?
-**Answer:**
-- **MySQL (SQL):** Used for **Bookings & Transactions** because transactional booking requires **ACID properties** (Atomicity, Consistency, Isolation, Durability) and strict relationships between `customers`, `movies`, and `bookings` using Foreign Keys.
-- **MongoDB (NoSQL):** Used for **Movie Reviews** because user reviews are semi-structured, write-heavy, independent documents that do not require complex joins or multi-table transaction locks.
+Choose a movie, date, show time, and seat type.
 
-### Q2: Explain the database normalization in your MySQL schema.
-**Answer:**
-The relational database `movie_booking_db` is normalized up to **3rd Normal Form (3NF)**:
-- **1NF:** Every column contains atomic (indivisible) values, and each table has a Primary Key (`movie_id`, `customer_id`, `booking_id`).
-- **2NF:** All non-key attributes are fully functionally dependent on the primary key (e.g., `customer_name` depends entirely on `customer_id`).
-- **3NF:** No transitive dependencies exist. Customer details are stored separately in the `customers` table rather than being duplicated in the `bookings` table.
+↓
 
-### Q3: What Foreign Key relationships exist in the database?
-**Answer:**
-In the `bookings` table:
-1. `customer_id` references `customers(customer_id)` with `ON DELETE CASCADE`.
-2. `movie_id` references `movies(movie_id)` with `ON DELETE CASCADE`.
+### 03 — Book
 
-### Q4: How does MongoDB store data compared to MySQL?
-**Answer:**
-- **MySQL** stores data in fixed tabular rows and columns defined by a strict SQL schema.
-- **MongoDB** stores data as flexible BSON (Binary JSON) document collections without a fixed schema, allowing easy field additions without database migrations.
+Enter customer details and confirm the ticket booking.
+
+↓
+
+### 04 — Manage
+
+View existing bookings and cancel reservations when required.
+
+↓
+
+### 05 — Review
+
+Rate movies and share feedback.
+
+↓
+
+### 06 — Store
+
+Booking information is stored in MySQL while reviews are stored in MongoDB.
 
 ---
 
-## 📄 License & Credits
-Developed as a DBMS College Project submission. Clean, simple, robust, and easy to explain!
+# 🔄 Data Flow
+
+## 🎟️ Booking
+
+```text
+Customer
+   ↓
+Booking Form
+   ↓
+Flask Backend
+   ↓
+MySQL
+   ↓
+Booking Record
+```
+
+## ⭐ Review
+
+```text
+Customer
+   ↓
+Review Form
+   ↓
+Flask Backend
+   ↓
+MongoDB
+   ↓
+Review Document
+```
+
+---
+
+# 🧠 Database Strategy
+
+### MySQL
+
+Used for structured and relational information:
+
+* 🎬 Movies
+* 👤 Customers
+* 🎟️ Bookings
+
+### MongoDB
+
+Used for flexible information:
+
+* ⭐ Reviews
+* 💬 Comments
+* 📊 Ratings
+* 🕒 Review timestamps
+
+Using the two databases allows each type of information to be managed according to its structure and requirements.
+
+---
+
+# 📊 CRUD Operations
+
+The application supports standard data operations.
+
+### Create
+
+* Add movie
+* Add customer
+* Create booking
+* Submit review
+
+### Read
+
+* View movies
+* View bookings
+* View reviews
+
+### Update
+
+* Update booking status
+* Cancel booking
+
+### Delete
+
+* Remove records where required
+
+---
+
+# 🧪 Example Booking
+
+```text
+Customer:
+Sujal
+
+Movie:
+Inception
+
+Tickets:
+2
+
+Seat Type:
+Regular
+
+Total:
+₹300
+
+Status:
+Confirmed
+```
+
+---
+
+# ⭐ Example Review
+
+```text
+Customer:
+Sujal
+
+Movie:
+Inception
+
+Rating:
+★★★★★
+
+Comment:
+Amazing background score and plot!
+```
+
+MongoDB document:
+
+```json
+{
+  "customer_name": "Sujal",
+  "movie_name": "Inception",
+  "rating": 5,
+  "comment": "Amazing background score and plot!"
+}
+```
+
+---
+
+# 🔐 Data Integrity
+
+The relational database maintains consistency using:
+
+* Primary Keys
+* Foreign Keys
+* Data Types
+* Constraints
+* Relational structure
+* Transactions
+
+MongoDB provides flexible document storage for reviews and feedback.
+
+---
+
+# 🎯 Key Highlights
+
+```text
+✓ Clean Web Interface
+✓ Movie Management
+✓ Customer Management
+✓ Ticket Booking
+✓ Booking Cancellation
+✓ Automatic Price Calculation
+✓ Movie Reviews
+✓ MySQL Integration
+✓ MongoDB Integration
+✓ CRUD Operations
+✓ Responsive Design
+```
+
+---
+
+# 📚 What This Project Demonstrates
+
+* Full-stack web application development
+* Python backend development
+* Flask routing
+* MySQL database integration
+* MongoDB integration
+* Relational database design
+* NoSQL document storage
+* CRUD operations
+* Frontend–backend communication
+* Database-driven application development
+
+---
+
+# 👨‍💻 About
+
+### Samar by Sujal
+
+**Samar** is a lightweight movie booking platform created with a focus on simplicity, usability, and practical database integration.
+
+**Built by Sujal**
+
+---
+
+# 📜 License
+
+This project is provided for educational and personal development purposes.
+
+---
+
+<p align="center">
+
+## 🎬 Samar
+
+### **Book. Watch. Review.**
+
+**Built with Python · Flask · MySQL · MongoDB**
+
+</p>
