@@ -1,10 +1,10 @@
 # 🎬 Movie Ticket Booking & Management System
-> **A Hybrid SQL + NoSQL College DBMS Project Submission**
+> **A Hybrid SQL + NoSQL**
 
 ---
 
 ## 📌 Project Overview
-**Movie Ticket Booking & Management System** is a clean, simple, and modern college-level DBMS project designed to demonstrate dual-database integration in a web application:
+**Movie Ticket Booking & Management System** is a clean, simple, and modern to demonstrate dual-database integration in a web application:
 - **Relational SQL Database (MySQL)** is used for structured, transactional data (**Movies**, **Customers**, and **Bookings**).
 - **Document NoSQL Database (MongoDB)** is used for unstructured, high-frequency user feedback (**Movie Reviews**).
 
@@ -129,3 +129,5 @@ Follow these exact steps during your 5-minute project demonstration:
     ```
 
 ---
+## 📄 License & Credits
+Open-source movie booking and manegement system
